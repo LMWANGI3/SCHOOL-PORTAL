@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #a44ccf, #ec70a6);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    #click{
+      position: absolute;
+      top: 15px; 
+      right: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    section {
+      display: none;
+      padding: 30px;
+    }
+
+    #landingPage {
+      display: block;
+      padding-top: 100px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4c2a85;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #5d34a1;
+    }
+
+    input, select {
+      margin: 8px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      width: 200px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.2rem;
+    }
+    h2{
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    #receipt {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    #feeStatus {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Landing Page -->
+  <section id="landingPage">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq33JO-4hGDJAlpYL-ctrC8aWi1Vtmlk30NIQYbkF6VD0mpUp--tTMIRo&s" alt="" height="300" width="500">
+    <h1> <em><i>TRIPPLE B SCHOOL PORTAL</i></em></h1>
+    <p><b>A platform that makes communication easier by connecting  <br> parents,students,teachers and alumni.</b></p>
+    <div id="click">
+    <button onclick="showLogin()" style="background-color: lightslategray;">Login / Register</button>
+     </div>
+  </section>
+
+  <section id="loginSection">
+    <h2>Login</h2>
+    <label for="roleSelection">Role Selection:</label>
+    <select id="roleSelection">
+      <option value="">Select a role</option>
+      <option value="parent">Parent</option>
+      <option value="teacher">Teacher</option>
+      <option value="student">Student</option>
+      <option value="alumni">Alumni</option>
+    </select><br>
+
+    <input type="text" id="username" placeholder="Enter your username"><br>
+    <input type="password" id="password" placeholder="Enter your password"><br>
+
+    <button onclick="login()">Login</button>
+    <button onclick="exit()">Back</button>
+  </section>
+
+  <!-- Parent Section -->
+  <section id="parentSection">
+    <h2>Parent Section</h2>
+    <p>Welcome parent,we thankyou for being part of this journey. <br>  We've now made fee payent seamless by introducing this website <br> where you can pay and view fee balance easily.</p>
+
+    <input type="text" id="childName" placeholder="Enter child's name"><br>
+    <select id="childGrade">
+      <option value="">Select grade</option>
+      <option value="Grade 1">Grade 1</option>
+      <option value="Grade 2">Grade 2</option>
+      <option value="Grade 3">Grade 3</option>
+      <option value="Grade 4">Grade 4</option>
+    </select><br>
+
+    <button onclick="calculateFee()">Calculate Fee</button>
+    <p id="calculatedFee"></p>
+
+    <div id="paymentSection">
+      <input type="text" id="phoneNumber" placeholder="Enter M-Pesa number"><br>
+      <button onclick="simulatePayment()">Pay via M-Pesa</button>
+    </div>
+
+    <div id="receipt">
+      <h3>Payment Receipt</h3>
+      <p id="receiptName"></p>
+      <p id="receiptAmount"></p>
+      <p id="feeStatus"></p>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+  </section>
+
+  <!-- Teacher Section -->
+  <section id="teacherSection">
+    <h2>Teacher Section</h2>
+    <p>Welcome teacher,thankyou for playing a great role at our school, <br> you can now manage students attendance easily via this website.</p>
+    <input type="text" placeholder="Enter student's name"><br>
+    <input type="text" placeholder="Enter student's grade"><br>
+    <select>
+      <option>Present</option>
+      <option>Absent</option>
+    </select><br>
+    <button>Mark Attendance</button><br>
+    <button onclick="logout()">Logout</button>
+  </section>
+
+  <!-- Student Section -->
+  <section id="studentSection">
+    <h2>Student Section</h2>
+    <p>Welcome, Student! You can now select your preferred subjects from here.</p>
+    <select>
+      <option value="">select preferred subject</option>
+      <option value="spanish">Spanish</option>
+      <option value="french">French</option>
+      <option value="homescience">Homescience</option>
+      <option value="ComputerStudies">Computer Studies</option>
+    </select><br>
+    <button>Submit Subject</button><br>
+    <button onclick="logout()">Logout</button>
+  </section>
+
+  <!-- Alumni Section -->
+  <section id="alumniSection">
+    <h2>Alumni Section</h2>
+    <p>Welcome, Alumni! We're glad to have you onboard, <br> you can now easily post and connect with others on this platform.</p>
+    <input type="text" placeholder="Enter update"><br>
+    <input type="text" placeholder="Source (optional)"><br>
+    <input type="date"><br>
+    <button>Submit update</button><br>
+    <button onclick="logout()">Logout</button>
+  </section>
+
+  <script>
+    // --- PAGE SWITCHING FUNCTIONS ---
+    function showLogin() {
+      document.getElementById("landingPage").style.display = "none";
+      document.getElementById("loginSection").style.display = "block";
+    }
+
+    function exit() {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("landingPage").style.display = "block";
+    }
+
+    function login() {
+      const role = document.getElementById("roleSelection").value;
+
+      if (role === "") {
+        alert("Please select a role to proceed.");
+        return;
+      }
+
+      document.getElementById("loginSection").style.display = "none";
+
+      if (role === "parent") {
+        document.getElementById("parentSection").style.display = "block";
+      } else if (role === "teacher") {
+        document.getElementById("teacherSection").style.display = "block";
+      } else if (role === "student") {
+        document.getElementById("studentSection").style.display = "block";
+      } else if (role === "alumni") {
+        document.getElementById("alumniSection").style.display = "block";
+      }
+    }
+
+    function logout() {
+      const sections = ["parentSection", "teacherSection", "studentSection", "alumniSection"];
+      sections.forEach(sec => document.getElementById(sec).style.display = "none");
+
+      document.getElementById("landingPage").style.display = "block";
+      document.getElementById("receipt").style.display = "none";
+      document.getElementById("paymentSection").style.display = "none";
+    }
+
+    // --- FEE CALCULATION & PAYMENT SIMULATION ---
+    function calculateFee() {
+      const grade = document.getElementById("childGrade").value;
+      const feeDisplay = document.getElementById("calculatedFee");
+      const paymentSection = document.getElementById("paymentSection");
+
+      let fee = 0;
+      if (grade === "Grade 1") fee = 15000;
+      else if (grade === "Grade 2") fee = 18000;
+      else if (grade === "Grade 3") fee = 20000;
+      else if (grade === "Grade 4") fee = 22000;
+      else {
+        alert("Please select a grade to calculate the fee.");
+        return;
+      }
+
+      feeDisplay.textContent = "Total Fee: Ksh " + fee.toLocaleString();
+      paymentSection.style.display = "block";
+    }
+
+    function simulatePayment() {
+      const name = document.getElementById("childName").value;
+      const phone = document.getElementById("phoneNumber").value;
+      const grade = document.getElementById("childGrade").value;
+
+      if (name === "" || phone === "" || grade === "") {
+        alert("Please fill all fields before payment.");
+        return;
+      }
+
+      alert("Prompt sent to your M-Pesa phone " + phone + ". Enter your PIN to confirm.");
+
+      setTimeout(() => {
+        document.getElementById("receipt").style.display = "block";
+        document.getElementById("receiptName").textContent = "Student: " + name + " (" + grade + ")";
+        document.getElementById("receiptAmount").textContent = "Amount Paid: Ksh " + getFeeAmount(grade).toLocaleString();
+        document.getElementById("feeStatus").textContent = "Status: Cleared ✅";
+      }, 2000);
+    }
+
+    function getFeeAmount(grade) {
+      switch (grade) {
+        case "Grade 1": return 20000;
+        case "Grade 2": return 25000;
+        case "Grade 3": return 37000;
+        case "Grade 4": return 45000;
+        default: return 0;
+      }
+    }
+  </script>
+
+</body>
+</html>
