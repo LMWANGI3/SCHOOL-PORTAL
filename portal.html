@@ -8,11 +8,12 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background: linear-gradient(to right, #a44ccf, #ec70a6);
-      color: white;
+      background-image: url("https://www.shutterstock.com/shutterstock/photos/1908794089/display_1500/stock-photo-academic-concept-smiling-junior-asian-school-girl-sitting-at-desk-in-classroom-writing-in-1908794089.jpg");
+      color: black;
       margin: 0;
       padding: 0;
     }
+   
     #click{
       position: absolute;
       top: 15px; 
@@ -73,6 +74,14 @@
     #feeStatus {
       font-weight: bold;
     }
+    #click button{
+      background-color: lightslategray;
+    }
+    #click button:hover {
+  background-color: rgb(140, 207, 230); /* Choose any color you like */
+  transition: background-color 0.3s ease;
+}
+
   </style>
 </head>
 
@@ -80,11 +89,11 @@
 
   <!-- Landing Page -->
   <section id="landingPage">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq33JO-4hGDJAlpYL-ctrC8aWi1Vtmlk30NIQYbkF6VD0mpUp--tTMIRo&s" alt="" height="300" width="500">
+    <img src="/White and Blue Illustrative Class Logo (1).png" alt=" " height="300" width="600">
     <h1> <em><i>TRIPPLE B SCHOOL PORTAL</i></em></h1>
     <p><b>A platform that makes communication easier by connecting  <br> parents,students,teachers and alumni.</b></p>
     <div id="click">
-    <button onclick="showLogin()" style="background-color: lightslategray;">Login / Register</button>
+    <button onclick="showLogin()" >Login / Register</button>
      </div>
   </section>
 
@@ -134,7 +143,7 @@
       <p id="receiptAmount"></p>
       <p id="feeStatus"></p>
     </div>
-
+    <button onclick="openChat('parent')">Open Chat</button> <br>
     <button onclick="logout()">Logout</button>
   </section>
 
@@ -149,6 +158,7 @@
       <option>Absent</option>
     </select><br>
     <button>Mark Attendance</button><br>
+    <button onclick="openChat('parent')">Open Chat</button> <br>
     <button onclick="logout()">Logout</button>
   </section>
 
@@ -164,6 +174,7 @@
       <option value="ComputerStudies">Computer Studies</option>
     </select><br>
     <button>Submit Subject</button><br>
+    <button onclick="openChat('parent')">Open Chat</button> <br>
     <button onclick="logout()">Logout</button>
   </section>
 
@@ -175,8 +186,22 @@
     <input type="text" placeholder="Source (optional)"><br>
     <input type="date"><br>
     <button>Submit update</button><br>
+    <button onclick="openChat('parent')">Open Chat</button> <br>
     <button onclick="logout()">Logout</button>
   </section>
+
+  <section id="chatSection" style="display:none; padding:30px;">
+  <h2>Community Chat Room</h2>
+  <p>Post an update, inquiry, or feedback — and interact with others in real time!</p>
+
+  <div id="chatBox" 
+       style="background-color: rgba(255,255,255,0.2); border-radius:10px; padding:15px; height:250px; overflow-y:auto; text-align:left;">
+  </div>
+
+  <input type="text" id="chatInput" placeholder="Type your message..." style="width:70%; margin-top:15px;">
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="logout()">Logout</button>
+</section>
 
   <script>
     // --- PAGE SWITCHING FUNCTIONS ---
@@ -269,6 +294,32 @@
         default: return 0;
       }
     }
+    function openChat(role) {
+  document.getElementById("parentSection").style.display = "none";
+  document.getElementById("teacherSection").style.display = "none";
+  document.getElementById("studentSection").style.display = "none";
+  document.getElementById("alumniSection").style.display = "none";
+
+  document.getElementById("chatSection").style.display = "block";
+  document.getElementById("chatBox").innerHTML += `<p><b>System:</b> ${role.charAt(0).toUpperCase() + role.slice(1)} joined the chat.</p>`;
+}
+
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  if (message === "") return;
+
+  const chatBox = document.getElementById("chatBox");
+  const time = new Date().toLocaleTimeString();
+  chatBox.innerHTML += `<p><b>You (${time}):</b> ${message}</p>`;
+  input.value = "";
+
+  // Simulated automated feedback
+  setTimeout(() => {
+    chatBox.innerHTML += `<p><b>Admin:</b> Thank you for your message! We’ll get back to you shortly.</p>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 1000);
+}
   </script>
 
 </body>
